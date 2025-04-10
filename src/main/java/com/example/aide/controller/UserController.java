@@ -20,7 +20,7 @@ public class UserController {
     public ApiResponseDTO signup(@RequestBody UserDTO userDTO) {
         Boolean success = userService.create(userDTO);
         if (success) {
-            return new ApiResponseDTO(success, "회원가입 성공");
+            return new ApiResponseDTO(success, "회원가입을 성공했습니다.");
         }
         else {
             return new ApiResponseDTO(false, "회원가입 실패");
