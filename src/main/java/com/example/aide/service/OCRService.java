@@ -1,6 +1,8 @@
 package com.example.aide.service;
 
 import com.example.aide.dto.OCRResponseDTO;
+import com.example.aide.dto.OCRResult;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -31,10 +33,26 @@ public class OCRService {
 
         // RestTemplate을 이용해 POST 요청을 보내고 응답을 받음
         RestTemplate restTemplate = new RestTemplate();
-        String result = restTemplate.postForObject(apiUrl, entity, String.class);
+        String jsonResponse = restTemplate.postForObject(apiUrl, entity, String.class);
+        ObjectMapper mapper = new ObjectMapper();
+        OCRResult ocrResult = null;
+        try {
+            ocrResult = mapper.readValue(jsonResponse, OCRResult.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         // 응답을 받아서 OCRResponseDTO 객체로 반환
-        return ResponseEntity.ok(new OCRResponseDTO(file, result));
+        // String text = ocrResult.getText();
+        String analysis;
+        if (ocrResult == null) {
+            analysis = "null";
+        }
+        else{
+            analysis = ocrResult.getAnalysis();
+        }
+
+        return ResponseEntity.ok(new OCRResponseDTO(file, analysis));
         // RestTemplate restTemplate = new RestTemplate();
 
         // // 테스트로 일단 String 값만 받아옴
