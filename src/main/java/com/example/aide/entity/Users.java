@@ -11,6 +11,7 @@ import lombok.*;
 public class Users {
 //    private Long id;
     private String userId;
+
     private String userPw;
     private String name;
 }

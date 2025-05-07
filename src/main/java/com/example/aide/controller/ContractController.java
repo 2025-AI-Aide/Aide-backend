@@ -1,6 +1,7 @@
 package com.example.aide.controller;
 
 import com.example.aide.dto.ApiResponseDTO;
+import com.example.aide.dto.OCRResponseDTO;
 import com.example.aide.service.ContractService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -10,15 +11,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+
 @RestController
-@RequestMapping
+@RequestMapping("/api/contract")
 @RequiredArgsConstructor
 public class ContractController {
     private final ContractService contractService;
 
-    @PostMapping("/contract/upload")
-    public ResponseEntity<ApiResponseDTO> uploadContract(@RequestParam("file") MultipartFile file) {
-        boolean result = contractService.uploadFile(file);
-        return ResponseEntity.ok(new ApiResponseDTO(result, "이미지 업로드 성공!"));
+    @PostMapping("/upload")
+    public ResponseEntity<ApiResponseDTO> uploadContract(@RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
+        if(file == null || file.isEmpty()) {
+            return ResponseEntity.ok(new ApiResponseDTO(false, "파일이 비어있습니다"));
+        }
+        ApiResponseDTO result = contractService.uploadFile(file).getBody();
+        return ResponseEntity.ok(new ApiResponseDTO(true, result.getMessage()));
     }
 }

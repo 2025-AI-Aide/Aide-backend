@@ -4,6 +4,8 @@ import com.example.aide.dto.ApiResponseDTO;
 import com.example.aide.dto.UserDTO;
 import com.example.aide.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,13 +19,22 @@ public class UserController {
 
 
     @PostMapping("/signup")
-    public ApiResponseDTO signup(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<ApiResponseDTO> signup(@RequestBody UserDTO userDTO) {
         Boolean success = userService.create(userDTO);
         if (success) {
-            return new ApiResponseDTO(success, "회원가입을 성공했습니다.");
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "application/json; charset=UTF-8") // ✅ 중요
+                    .body(new ApiResponseDTO(success, "회원가입 성공"));
+
+//                    new ApiResponseDTO(success, "회원가입을 성공했습니다.");
         }
         else {
-            return new ApiResponseDTO(false, "회원가입 실패");
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "application/json; charset=UTF-8") // ✅ 중요
+                    .body(new ApiResponseDTO(false, "회원가입 실패"));
         }
     }
+
+//    @PostMapping("/ocr")
+//    public ApiResponseDTO ocrDataProcess(){
+//
+//    }
 }
