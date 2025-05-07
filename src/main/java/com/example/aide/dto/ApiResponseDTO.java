@@ -11,7 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 @NoArgsConstructor
 //@AllArgsConstructor
 
-public class ApiResponseDTO<T> {
+public class ApiResponseDTO {
     private Boolean success;
     private String message;
     private MultipartFile file;

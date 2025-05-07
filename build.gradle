@@ -8,7 +8,7 @@ group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 
 java {
-	sourceCompatibility = '17.0.11' // 이 녀석 추가
+	// sourceCompatibility = '17.0.11' // 이 녀석 추가
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(17)
 	}
