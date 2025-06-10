@@ -6,3 +6,6 @@
 6. 사용자 기록 저장기능
 7. 회원가입 및 로그인기능
 8. 확인 체크리스트 기능
+ **************************
+ 실행시 tesseract OCR이 필요합니다. 
+tesseractOCR github link : https://github.com/tesseract-ocr/tesseract
