@@ -6,7 +6,7 @@ client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 def analyze_contract_with_gpt(text: str) -> str:
 
     prompt = f"""
-    다음은 전세 계약서의 특약사항입니다. 각 문장을 개별적으로 분석해 주세요. 각 문장에 대해 다음 항목들을 포함하여 출력해 주세요:
+    다음은 전세 계약서의 특약사항입니다. 각 문장을 개별적으로 분석해 주세요. 각 문장은 올바른 단어로 이루어져있지 않을 수 있습니다. 문장에 이상한 문자나 단어가 있다면 문법에 맞게 바꾸어주세요. 문장은 '특약사항'이라는 문구 다음에 등장하는 문장만 분석해주세요. 각 문장에 대해 다음 항목들을 포함하여 출력해 주세요:
 
     1. 위험도 수준 (1~5 사이의 숫자, 숫자만)
     2. 위험사항 여부 ("예" 또는 "아니오")
@@ -37,4 +37,5 @@ def analyze_contract_with_gpt(text: str) -> str:
             {"role": "user", "content": prompt}
         ]
     )
+    print(response.choices[0].message.content)
     return response.choices[0].message.content
