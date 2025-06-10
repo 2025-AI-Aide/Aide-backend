@@ -1,6 +1,8 @@
 package com.example.aide.dto;
 
-public class OCRResult {
+import lombok.Getter;
+import lombok.Setter;
+public class OCRResult {    
     private String text;
     private String analysis;
 
